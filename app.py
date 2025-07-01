@@ -3,16 +3,12 @@ import pandas as pd
 from datetime import datetime
 import os
 
-# Path to Excel file
-excel_file = "tool_inventory_log.xlsx"
-
-# Create file if it doesn't exist
-if not os.path.exists(excel_file):
-    df_init = pd.DataFrame(columns=["Timestamp", "Name", "Item", "Quantity"])
-    df_init.to_excel(excel_file, index=False)
+# Path to your Excel file
+excel_path = r"U:\AI\Shop (Chris)\Inventory-Checkout\AZ Part List.xlsx"
+sheet_name = "Checkout"
 
 # Streamlit UI
-st.title("Tool Checkout Log")
+st.title("Inventory Checkout Log")
 
 name = st.text_input("Your Name")
 item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB-3/16 SDS", "DB-1/4 SDS", "CSB-7 1/4", "CSB-6 1/2", "CSB-5 3/8", "CSB-7 1/4 AL", 
@@ -27,16 +23,28 @@ if st.button("Submit"):
     if name.strip() == "":
         st.warning("Please enter your name.")
     else:
-        new_entry = pd.DataFrame([{
+        new_row = {
             "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "Name": name,
             "Item": item,
             "Quantity": quantity
-        }])
+        }
 
-        # Append to Excel
-        existing_df = pd.read_excel(excel_file)
-        updated_df = pd.concat([existing_df, new_entry], ignore_index=True)
-        updated_df.to_excel(excel_file, index=False)
+        # Load existing Excel workbook
+        book = load_workbook(excel_path)
+        writer = pd.ExcelWriter(excel_path, engine='openpyxl', mode='a', if_sheet_exists='overlay')
+        writer.book = book
+        writer.sheets = {ws.title: ws for ws in book.worksheets}
 
+        # Find the next empty row in the sheet
+        sheet = book[sheet_name]
+        next_row = sheet.max_row + 1
+
+        # Write the new row
+        df = pd.DataFrame([new_row])
+        df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=False)
+
+        writer.save()
         st.success(f"{quantity} x {item} checked out by {name}")
+
+
