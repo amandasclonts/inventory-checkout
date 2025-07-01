@@ -33,22 +33,22 @@ if st.button("Submit"):
             "Quantity": quantity
         }
 
-        # Load existing Excel workbook
+         # Load existing Excel workbook and sheet
         book = load_workbook(excel_path)
+        sheet = book[sheet_name]
+        next_row = sheet.max_row + 1
+
+        # Open writer
         writer = pd.ExcelWriter(excel_path, engine='openpyxl', mode='a', if_sheet_exists='overlay')
         writer.book = book
         writer.sheets = {ws.title: ws for ws in book.worksheets}
 
-        # Find the next empty row in the sheet
-        sheet = book[sheet_name]
-        next_row = sheet.max_row + 1
-
-        # Write the new row
+        # Append new row
         df = pd.DataFrame([new_row])
         df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=False)
 
-        st.write(f"Writing to Excel at row {next_row}")
-        writer.save()
-        st.success(f"{quantity} x {item} checked out by {name}")
+        writer.close()  # ✅ better than writer.save()
+
+        st.success(f"{quantity} x {item} checked out by {name} on {checkout_date} at {checkout_time}")
 
 
