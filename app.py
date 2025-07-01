@@ -47,6 +47,7 @@ if st.button("Submit"):
         df = pd.DataFrame([new_row])
         df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=False)
 
+        st.write(f"Writing to Excel at row {next_row}")
         writer.save()
         st.success(f"{quantity} x {item} checked out by {name}")
 
