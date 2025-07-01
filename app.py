@@ -19,12 +19,15 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 "SG 795 WHT", "SG 795 CHR", "SG 795 GRY", "SG 795 BLK", "SG 795 SND", "SG 795 CHM", "SGT-YELLOW", "SGT-GREEN", "SGT-RNG", "SB 1/16", "SR 1/8", "SB 1/4"])  # Customize list
 quantity = st.number_input("Quantity", min_value=1, step=1)
 
+checkout_date = st.date_input("Checkout Date", value=datetime.today())
+checkout_time = st.time_input("Checkout Time", value=datetime.now().time())
+
 if st.button("Submit"):
     if name.strip() == "":
         st.warning("Please enter your name.")
     else:
         new_row = {
-            "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Timestamp": f"{checkout_date} {checkout_time}",
             "Name": name,
             "Item": item,
             "Quantity": quantity
