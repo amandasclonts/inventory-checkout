@@ -18,6 +18,7 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 "3 T5", "1 1/4 T5 TORX", "RVT #44 AL", "RVT #46 AL", "RVT #44 SS", "RVT #46 SS", "3/16 NAILIN", "1 1/4 TAP HWH 1/4", "1 3/4 TAP HWH 1/4", "2 1/4 TAP HWH 1/4", "BKR-7/8 OPEN",
 "SG 795 WHT", "SG 795 CHR", "SG 795 GRY", "SG 795 BLK", "SG 795 SND", "SG 795 CHM", "SGT-YELLOW", "SGT-GREEN", "SGT-RNG", "SB 1/16", "SR 1/8", "SB 1/4"])  # Customize list
 quantity = st.number_input("Quantity", min_value=1, step=1)
+unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
 checkout_date = st.date_input("Checkout Date", value=datetime.today())
 checkout_time = st.time_input("Checkout Time", value=datetime.now().time())
@@ -30,8 +31,10 @@ if st.button("Submit"):
             "Timestamp": f"{checkout_date} {checkout_time}",
             "Name": name,
             "Item": item,
-            "Quantity": quantity
+            "Quantity": quantity,
+            "Quantity Type": unit_type  # ✅ New field
         }
+
 
          # Load existing Excel workbook and sheet
         book = load_workbook(excel_path)
