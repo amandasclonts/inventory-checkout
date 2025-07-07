@@ -48,7 +48,10 @@ if st.button("Submit"):
 
         # Append new row
         df = pd.DataFrame([new_row])
-        df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=False)
+        # Only write header if writing to a brand new sheet (e.g., first row after header is empty)
+        write_header = next_row == 1
+
+        df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=write_header)
 
         writer.close()  # ✅ better than writer.save()
 
