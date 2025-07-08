@@ -52,6 +52,7 @@ if st.button("Submit"):
         write_header = next_row == 1
 
         df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=write_header)
+        st.write("✅ Data written:", df)
 
         writer.close()  # ✅ better than writer.save()
 
