@@ -5,7 +5,7 @@ import os
 from openpyxl import load_workbook
 
 # Path to your Excel file
-excel_path = r"U:\AI\Shop (Chris)\Inventory-Checkout\AZ Part List.xlsx"
+excel_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\AZ Part List.xlsx"
 sheet_name = "Checkout"
 
 # Streamlit UI
