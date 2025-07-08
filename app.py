@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import os
+from openpyxl import load_workbook
 
 # Path to your Excel file
 excel_path = r"U:\AI\Shop (Chris)\Inventory-Checkout\AZ Part List.xlsx"
