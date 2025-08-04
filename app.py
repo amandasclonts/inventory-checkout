@@ -4,7 +4,7 @@ from datetime import datetime
 from openpyxl import load_workbook
 
 # Path to your Excel file (where it logs checkouts)
-excel_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\AZ Part List.xlsx"
+excel_path = "az_parts.xlsx"
 sheet_name = "Checkout"
 
 # --- UI: Title ---
