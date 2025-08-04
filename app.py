@@ -26,6 +26,12 @@ item = st.selectbox("Select Item", [
 quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
+import os
+
+excel_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\AZ Part List.xlsx"
+print(os.path.exists(excel_path))
+
+
 job_options = [
     "21048 - TSMC Fab 21 - Phoenix, AZ", "21064 - Carvana Corporate Campus", "21066 - Maya Hotel",
     "22004 - QTS PHX2 DC1", "22006 - Historic Post Office", "22018 - Gilbert NWTP South Reservoir Improvements",
