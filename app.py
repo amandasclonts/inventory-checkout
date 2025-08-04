@@ -21,37 +21,23 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
-import os
-
-job_list_path = r"\\wbgserver\CompanyShare\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
-
-st.write("File exists:", os.path.exists(job_list_path))
-
-job_list_path = r"\\wbgserver\CompanyShare\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
-
+job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
 
 try:
     # Load the Excel sheet and rename columns safely
     job_df = pd.read_excel(job_list_path, sheet_name=0, usecols="A,C")  # Sheet 0 = first tab
-
     # Rename columns to expected names for safety
     job_df.columns = ["Job No.", "Job Name"]
-
     # Drop empty rows
     job_df = job_df.dropna(subset=["Job No.", "Job Name"])
-
     # Create display text
     job_df["Display"] = job_df["Job No."].astype(str) + " - " + job_df["Job Name"].astype(str)
-
-    # Generate the dropdown options
+     # Generate the dropdown options
     job_options = job_df["Display"].tolist()
 
 except Exception as e:
     job_options = []
     st.error(f"⚠️ Could not load job list: {e}")
-
-
-
 
 job_selected = st.selectbox("Select Job", job_options)
 
