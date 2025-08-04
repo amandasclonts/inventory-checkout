@@ -22,7 +22,7 @@ quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
 # Path to job list Excel file
-job_list_path = r"W:\1. PROJECT FOLDERS\3. PROJECTS - CURRENT\_Projects List.xlsx"
+job_list_path = r""C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx""
 
 # Load job numbers and names
 try:
