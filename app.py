@@ -21,6 +21,21 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
+# Path to job list Excel file
+job_list_path = r"W:\1. PROJECT FOLDERS\3. PROJECTS - CURRENT\_Projects List.xlsx"
+
+# Load job numbers and names
+try:
+    job_df = pd.read_excel(job_list_path, sheet_name="Project List", usecols="A,C")  # Read columns A and C
+    job_df = job_df.dropna(subset=["Job Number", "Job Name"])  # Remove rows with missing info
+    job_df["Display"] = job_df["Job Number"].astype(str) + " - " + job_df["Job Name"].astype(str)
+    job_options = job_df["Display"].tolist()
+except Exception as e:
+    job_options = []
+    st.error("⚠️ Could not load job list. Check path, sheet name, or column headers.")
+
+job_selected = st.selectbox("Select Job", job_options)
+
 checkout_date = st.date_input("Checkout Date", value=datetime.today())
 checkout_time = st.time_input("Checkout Time", value=datetime.now().time())
 
@@ -29,12 +44,14 @@ if st.button("Submit"):
         st.warning("Please enter your name.")
     else:
         new_row = {
-            "Timestamp": f"{checkout_date} {checkout_time}",
+            "Timestamp": f"{checkout_date.strftime('%Y-%m-%d')} {checkout_time.strftime('%I:%M %p')}",
             "Name": name,
+            "Job": job_selected,
             "Item": item,
             "Quantity": quantity,
-            "Quantity Type": unit_type  # ✅ New field
+            "Quantity Type": unit_type
         }
+
 
 
          # Load existing Excel workbook and sheet
