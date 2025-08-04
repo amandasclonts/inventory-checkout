@@ -23,12 +23,14 @@ unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
 import os
 
-job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
+job_list_path = r"U:\AI\Shop (Chris)\Inventory-Checkout\Project List.xlsx"
+
 
 st.write("File exists:", os.path.exists(job_list_path))
 
 
-job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
+job_list_path = r"U:\AI\Shop (Chris)\Inventory-Checkout\Project List.xlsx"
+
 
 try:
     # Load the Excel sheet and rename columns safely
