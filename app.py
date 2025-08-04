@@ -19,7 +19,11 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 "3 T5", "1 1/4 T5 TORX", "RVT #44 AL", "RVT #46 AL", "RVT #44 SS", "RVT #46 SS", "3/16 NAILIN", "1 1/4 TAP HWH 1/4", "1 3/4 TAP HWH 1/4", "2 1/4 TAP HWH 1/4", "BKR-7/8 OPEN",
 "SG 795 WHT", "SG 795 CHR", "SG 795 GRY", "SG 795 BLK", "SG 795 SND", "SG 795 CHM", "SGT-YELLOW", "SGT-GREEN", "SGT-RNG", "SB 1/16", "SR 1/8", "SB 1/4"])  # Customize list
 quantity = st.number_input("Quantity", min_value=1, step=1)
+
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)"])
+
+unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
+
 
 job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
 
@@ -76,4 +80,26 @@ if st.button("Submit"):
 
         writer.close()  # ✅ better than writer.save()
 
+
+         # Load existing Excel workbook and sheet
+        book = load_workbook(excel_path)
+        sheet = book[sheet_name]
+        next_row = sheet.max_row + 1
+
+        # Open writer
+        writer = pd.ExcelWriter(excel_path, engine='openpyxl', mode='a', if_sheet_exists='overlay')
+        writer.book = book
+        writer.sheets = {ws.title: ws for ws in book.worksheets}
+
+        # Append new row
+        df = pd.DataFrame([new_row])
+        # Only write header if writing to a brand new sheet (e.g., first row after header is empty)
+        write_header = next_row == 1
+
+        df.to_excel(writer, sheet_name=sheet_name, startrow=next_row, index=False, header=write_header)
+        st.write("✅ Data written:", df)
+
+        writer.close()  # ✅ better than writer.save()
+
         st.success(f"{quantity} x {item} checked out by {name} on {checkout_date} at {checkout_time}")
+
