@@ -8,7 +8,7 @@ excel_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lis
 sheet_name = "Checkout"
 
 # --- UI: Title ---
-st.title("Inventory Checkout Log")
+st.title("Inventory Checkout Log - Arizona")
 
 # --- UI: Input Fields ---
 name = st.text_input("Your Name")
@@ -26,57 +26,43 @@ item = st.selectbox("Select Item", [
 quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
-# --- UI: Hardcoded Job List ---
 job_options = [
-    "21041 - Beaver Valley Hospital",
-    "21048 - TSMC Fab 21 - Phoenix, AZ",
-    "21056 - Skyline High School - Academics",
-    "21064 - Carvana Corporate Campus",
-    "21066 - Maya Hotel",
-    "22001 - MWR Hotel and Conference Center at Mayflower",
-    "22004 - QTS PHX2 DC1",
-    "22006 - Historic Post Office",
-    "22010 - WSD New High School",
-    "22015 - TCSD Deseret Peak High School",
-    "22017 - Black Desert Resort",
-    "22018 - Gilbert NWTP South Reservoir Improvements",
-    "22025 - Caesars Republic Hotel",
-    "22030 - Shoreline Middle School",
-    "22034 - BYU Arts Building",
-    "22043 - Dangerous Cargo Pad and CATM Facility",
-    "22044 - Vantage Data Center AZ 12 & 13",
-    "22049 - Tempe Municipal Operations Center - GMP 3",
-    "22052 - The McKinley",
-    "22056 - IHC Layton Ambulatory Surgical Center",
-    "22060 - Prologis Loop 303 Goodyear Building 1",
-    "22062 - Cache Valley Transit District Admin & Maint Facility",
-    "23001 - 601 N Central",
-    "23002 - Mesa Police Evidence Storage",
-    "23003 - Ground Based Strategic Deterrent Software Sustainment Center",
-    "23006 - NTT PH2-PH3",
-    "23009 - Liberty Dogs Mock-Up Building",
-    "23011 - Frank E Moss Courthouse Renovation",
-    "23012 - OSD Pathways Facility",
-    "23013 - Intermountain Washington Fields Clinic",
-    "23014 - Stansbury Junior High School",
-    "23015 - Sunset Junior High School Replacement",
-    "23016 - Brix",
-    "23017 - COE Flight Engineering Lab Complex Edwards AFB",
-    "23018 - Delta Flight Operations Training Facility",
-    "23019 - Elliot Mesa Commerce Center",
-    "23020 - QTS PHX2 DC5",
-    "23021 - Hopi HCC Outpatient and Emergency Expansion",
-    "23022 - Cedar East Elementary School",
-    "23023 - Fry's Store 655 - Gilbert",
-    "23025 - Goodyear Civic Square Building 3B & 4",
-    "23026 - Liberty Dogs Warehouse Building D1",
-    "23027 - Tooele Tech College Expansion",
-    "23028 - City of Mesa Northeast Public Safety Facility",
-    "23032 - Primary Children's Wasatch Canyons Replacement Project",
-    "23034 - Waterford School Student Commons",
-    "23035 - Snowball WTP",
-    "23037 - Park City HS Expansion & Remodel"
+    "21048 - TSMC Fab 21 - Phoenix, AZ", "21064 - Carvana Corporate Campus", "21066 - Maya Hotel",
+    "22004 - QTS PHX2 DC1", "22006 - Historic Post Office", "22018 - Gilbert NWTP South Reservoir Improvements",
+    "22025 - Caesars Republic Hotel", "22044 - Vantage Data Center AZ 12 & 13",
+    "22049 - Tempe Municipal Operations Center - GMP 3", "22052 - The McKinley",
+    "22060 - Prologis Loop 303 Goodyear Building 1", "23001 - 601 N Central",
+    "23002 - Mesa Police Evidence Storage", "23006 - NTT PH2-PH3", "23017 - COE Flight Engineering Lab Complex Edwards AFB",
+    "23019 - Elliot Mesa Commerce Center", "23020 - QTS PHX2 DC5", "23021 - Hopi HCC Outpatient and Emergency Expansion",
+    "23023 - Fry's Store 655 - Gilbert", "23025 - Goodyear Civic Square Building 3B & 4",
+    "23028 - City of Mesa Northeast Public Safety Facility", "23038 - Expansion & Modernization Project at the San Luis I Land Port of Entry",
+    "23039 - Esplanade Renovation - Tower 01 and 02", "23042 - Thunderbird Reservoir",
+    "23046 - ASU - West Campus Academic Building", "23053 - Queen Creek Rec. & Aquatic Center",
+    "23054 - Andretti's Indoor Karting Glendale, AZ", "23055 - QTS PHX2 DC2 36MW", "23056 - Phoenix Fire Station #62",
+    "23059 - Ellsworth Ranch Central Amenity", "23060 - QTS PHX2 DC-3", "23063 - Electric Pickle Tempe II",
+    "23064 - ASU Polytechnic Research and Educational Building", "23065 - 301 Maricopa County Restack - Phoenix, AZ",
+    "23067 - South Pier Towers 1, 2, and 3", "23069 - Marana Community and Aquatic Facility",
+    "24001 - Prologis Loop 303 Building 2", "24002 - Abrazo Buckeye MOB", "24004 - Yuma Administration Services Building (aka: YUCO Admin)",
+    "24006 - NRS Logistics", "24007 - Surprise Fire Station #309", "24008 - Xnrgy", "24009 - Surprise Oasis Aquatic Complex",
+    "24010 - Buckeye Commons Buildings A, B, C, D", "24012 - Tempe Municipal Operations Center Ph 2",
+    "24013 - Papago Golf House", "24014 - Intel OC43", "24015 - Casa Grande Fire Station #503",
+    "24017 - Lucid BIW Slab Replacements", "24018 - Floreo at Teravalis", "24020 - Avalon Crossing Pavilion",
+    "24021 - QTS 23 PHX2 - DC1 PHXMercury EFO", "24025 - 1020 Apache", "24028 - Arizona Dignity Health R&R",
+    "24031 - Sun Life Family Health Medical Office Building", "24032 - QTS PHX3 DC-14", "24034 - Hayden's Ferry Restaurant",
+    "24036 - Mountain Park Health Center", "24040 - Abrazo Medical Office", "24042 - EdgeConnex PHX11",
+    "24043 - Buckeye 911 Call Center", "24046 - QTS PHX3 DC-13", "24047 - Win Aviation Hangar",
+    "24048 - Evie's Pavilion Expansion", "24049 - YPG Ready Building", "24050 - Casino Del Sol",
+    "24051 - Uptown Mall Parking Garage", "24052 - Willscot HQ", "24058 - Fender Office Building",
+    "25002 - TSMC FAB21 DB", "25006 - Nuvision Credit Union", "25007 - Sprouts HQ Design Assist",
+    "25008 - NAH Orthopedic Surgery Center", "25009 - NTT PH4", "25010 - Intel - Cleanlink",
+    "25011 - Astria", "25012 - Verrado Marketplace", "25013 - Hayden's Ferry Façade Renovation CO#1",
+    "25016 - PSHIA Terminal 3 North Concourse 2", "25017 - PSHIA Terminal 3 South Gates",
+    "25018 - Remi Hotel", "25022 - Tempe Community Action Agency", "25024 - Behrhorst Residence Re-Roof",
+    "25027 - City North Dual Brand Hotel", "25028 - QTS PHX3 DC-2", "25029 - QTS PHX3 DC-9",
+    "25030 - PHX 065", "25033 - Heroes Regional Park Library Expansion", "25034 - NTT PH5",
+    "25035 - Desert Mountain MSA #2", "25037 - TSMC Phase 3 GMP CSA"
 ]
+
 job_selected = st.selectbox("Select Job", job_options)
 
 checkout_date = st.date_input("Checkout Date", value=datetime.today())
