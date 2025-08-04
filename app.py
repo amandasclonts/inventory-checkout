@@ -24,13 +24,25 @@ unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
 
 try:
-    job_df = pd.read_excel(job_list_path, sheet_name="Project List", usecols="A,C")  # A = Job No., C = Job Name
+    # Load the Excel sheet and rename columns safely
+    job_df = pd.read_excel(job_list_path, sheet_name=0, usecols="A,C")  # Sheet 0 = first tab
+
+    # Rename columns to expected names for safety
+    job_df.columns = ["Job No.", "Job Name"]
+
+    # Drop empty rows
     job_df = job_df.dropna(subset=["Job No.", "Job Name"])
+
+    # Create display text
     job_df["Display"] = job_df["Job No."].astype(str) + " - " + job_df["Job Name"].astype(str)
+
+    # Generate the dropdown options
     job_options = job_df["Display"].tolist()
+
 except Exception as e:
     job_options = []
-    st.error("⚠️ Could not load job list. Check file path or column headers.")
+    st.error(f"⚠️ Could not load job list: {e}")
+
 
 
 
