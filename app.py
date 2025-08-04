@@ -21,18 +21,18 @@ item = st.selectbox("Select Item", ["DB-1/8", "DB-#30", "DB-3/16", "DB-1/4", "DB
 quantity = st.number_input("Quantity", min_value=1, step=1)
 unit_type = st.selectbox("Quantity Type", ["Individual piece(s)", "Bag", "Box"])
 
-# Path to job list Excel file
-job_list_path = r""C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx""
+# Job list file path and sheet setup
+job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\Lisa & Amanda\Amanda - AI\Project List.xlsx"
 
-# Load job numbers and names
 try:
-    job_df = pd.read_excel(job_list_path, sheet_name="Project List", usecols="A,C")  # Read columns A and C
-    job_df = job_df.dropna(subset=["Job Number", "Job Name"])  # Remove rows with missing info
+    job_df = pd.read_excel(job_list_path, sheet_name="Project List", usecols="A,C")  # columns A and C
+    job_df = job_df.dropna(subset=["Job Number", "Job Name"])
     job_df["Display"] = job_df["Job Number"].astype(str) + " - " + job_df["Job Name"].astype(str)
     job_options = job_df["Display"].tolist()
 except Exception as e:
     job_options = []
-    st.error("⚠️ Could not load job list. Check path, sheet name, or column headers.")
+    st.error("⚠️ Could not load job list. Check file path or column headers.")
+
 
 job_selected = st.selectbox("Select Job", job_options)
 
