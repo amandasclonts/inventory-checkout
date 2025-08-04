@@ -26,7 +26,7 @@ job_list_path = r"C:\Users\amandac\Western Building Group\FileShare - Documents\
 
 try:
     job_df = pd.read_excel(job_list_path, sheet_name="Project List", usecols="A,C")  # columns A and C
-    job_df = job_df.dropna(subset=["Job Number", "Job Name"])
+    job_df = job_df.dropna(subset=["Job No.", "Job Name"])
     job_df["Display"] = job_df["Job Number"].astype(str) + " - " + job_df["Job Name"].astype(str)
     job_options = job_df["Display"].tolist()
 except Exception as e:
